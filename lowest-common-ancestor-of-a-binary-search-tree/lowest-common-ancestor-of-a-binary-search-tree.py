@@ -35,6 +35,8 @@ class Solution:
                 if left and right and not sol:
                     sol = root
                 return left or right
+
+                
             return False
 
         lca(root)
