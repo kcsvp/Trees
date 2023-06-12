@@ -10,21 +10,20 @@ class Solution:
         sol = None
 
 
-        def lca(root):
-            nonlocal sol
-            if root:
-                left = True if lca(root.left) else False
-                right = True if lca(root.right) else False
-                if left and right and not sol:
-                    sol = root
-                elif (left or right) and (root == p or root == q) and not sol:
-                    sol = root 
-                elif root == p or root == q:
-                    return True
-                return left or right
-            return False
+        # def lca(root):
+        #     nonlocal sol
+        #     if root:
+        #         left = True if lca(root.left) else False
+        #         right = True if lca(root.right) else False
+        #         if left and right and not sol:
+        #             sol = root
+        #         elif (left or right) and (root == p or root == q) and not sol:
+        #             sol = root 
+        #         elif root == p or root == q:
+        #             return True
+        #         return left or right
+        #     return False
 
-        lca(root)
 
         # def lca(root):
         #     nonlocal sol
@@ -57,4 +56,19 @@ class Solution:
         #     return False
 
         # lca(root)
-        return sol
+
+        def lca(root):
+
+            if root:
+
+                if root.val < p.val and root.val < q.val:
+                    return lca(root.right)
+
+                elif root.val > p.val and root.val  > q.val:
+                    return lca(root.left)
+
+                else:
+                    return root
+
+
+        return lca(root)
