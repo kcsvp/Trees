@@ -7,12 +7,22 @@
 class Solution:
     def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
 
-        if not inorder:
-            return None
+        hashmap = dict()
+        for i in range(len(inorder)):
+            hashmap[inorder[i]] = i
 
-        root = TreeNode(postorder[-1])
-        r_index = inorder.index(postorder[-1])
-        root.left = self.buildTree(inorder[:r_index],postorder[:r_index])
-        root.right = self.buildTree(inorder[r_index+1:],postorder[r_index:-1])
+        def bt(in_start,in_end,post_start,post_end):
 
-        return root
+            if in_start > in_end or post_start > post_end:
+                return None
+
+            root = TreeNode(postorder[post_end])
+            r_index = hashmap[root.val]
+            l_len = r_index - in_start
+            r_len = in_end - r_index
+            root.left = bt(in_start,in_start + l_len - 1,post_start,post_start + l_len -1)
+            root.right = bt(r_index+1,in_end,post_end - r_len,post_end-1)
+
+            return root
+
+        return bt(0,len(inorder)-1,0,len(inorder)-1)
