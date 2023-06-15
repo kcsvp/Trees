@@ -10,18 +10,18 @@ class Solution:
         path = [float('-inf')]
         sol = 0
 
-        def dfs(root):
+        def dfs(root,mx_val):
             nonlocal sol
 
             if root:
-                if root.val >= path[-1]:
+                if root.val >= mx_val:
                     sol += 1
 
-                path.append(max(path[-1],root.val))
-                dfs(root.left)
-                dfs(root.right)
-                path.pop()
+                mx_val = max(mx_val,root.val)
+                dfs(root.left,mx_val)
+                dfs(root.right,mx_val)
+                # path.pop()
 
-        dfs(root)
+        dfs(root,float('-inf'))
 
         return sol
